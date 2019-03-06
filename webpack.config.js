@@ -17,7 +17,11 @@ module.exports = {
                         loader: "html-loader"
                     }
                 ]
-            }
+            },
+            {
+                test: /\.css$/,
+                use: ['css-loader'],
+              }
         ]
     },
     devServer: {
