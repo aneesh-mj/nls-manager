@@ -1,23 +1,18 @@
 import React, { Component } from 'react';
-
 import { NlsConsumer } from "./AppContext";
 
-/*
-const DirectortList = (context) => {
-    console.log(context);
-    const keys = Object.keys(context.directory);
-    console.log("keys", keys)
-    if (keys && keys.length) {
-        return keys.map((key) => {
-            return <h4>{key}</h4>
-        });
-    }
-    else {
-        return <span>loading...</span>;
-    }
-}*/
+class DirectoryList extends Component {
 
-class DirectortList extends Component {
+    onFileClick = (evt) => {
+        const { context } = this.props;
+        const fileName = evt.target.getAttribute("data-filename");
+        if (context.selectedFile !== fileName) {
+            context.setSelectedFile(fileName);
+        }
+
+        // debugger
+        // const {file} = evt.target
+    }
 
     renderFileList(obj, key) {
         const keys = Object.keys(obj);
@@ -31,7 +26,7 @@ class DirectortList extends Component {
             });
             console.log("fileNamesfileNames", fileNames);
             return fileNames.map((file, i) => {
-                return <span key={i} className="filename">{file}</span>
+                return <span key={i} className="filename" onClick={this.onFileClick} data-filename={obj['nls'][i]}>{file}</span>
             });
         }
         else {
@@ -71,7 +66,7 @@ class Directory extends Component {
             <NlsConsumer>
                 {
                     context => {
-                        return <DirectortList context={context} />
+                        return <DirectoryList context={context} />
                     }
                 }
             </NlsConsumer>

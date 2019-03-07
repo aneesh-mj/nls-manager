@@ -4,15 +4,17 @@ import './App.css';
 
 import { NlsProvider } from "./AppContext";
 import Directory from "./Directory";
+import FileViewer from "./FileViewer";
 
 class App extends Component {
 
   state = {
     directory: {},
     number: 0,
-    inc: () => {
-      this.setState({ number: this.state.number + 1 })
-    }
+    setSelectedFile: (file) => {
+      this.setState({ selectedFile: file })
+    },
+    selectedFile: ""
   }
 
   getDirectory = async () => {
@@ -43,7 +45,9 @@ class App extends Component {
             <div className="left">
               <Directory />
             </div>
-            <div className="right"></div>
+            <div className="right">
+              <FileViewer />
+            </div>
           </div>
           <div className="footer">
 
