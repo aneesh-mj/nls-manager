@@ -3,6 +3,13 @@ import { NlsConsumer } from "./AppContext";
 
 class DirectoryList extends Component {
 
+    _context = {};
+
+    componentWillReceiveProps(n, old) {
+        console.log(n, this._context);
+        this._context = n;
+    }
+
     onFileClick = (evt) => {
         const { context } = this.props;
         const fileName = evt.target.getAttribute("data-filename");
