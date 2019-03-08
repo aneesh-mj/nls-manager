@@ -2,14 +2,18 @@ const express = require('express');
 const os = require('os');
 const path = require('path');
 var fs = require('fs');
+const fsx = require('fs-extra');
+
+var copydir = require('copy-dir');
+var ncp = require('ncp').ncp;
 
 const app = express();
 
 app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT}, ${process.argv.slice(2)}!`));
 
 app.use(express.static('dist'));
-app.get('/api/getUsername', (req, res) => res.send({ 
-    username: os.userInfo().username 
+app.get('/api/getUsername', (req, res) => res.send({
+    username: os.userInfo().username
 }));
 
 app.get('/api/files', function (req, res) {
@@ -19,7 +23,9 @@ app.get('/api/files', function (req, res) {
 
 
 let mapObj = {};
+let files = [];
 function filewalker(dir, done) {
+    // console.log("filewalkerfilewalkerfilewalker");
     let results = [];
     fs.readdir(dir, function (err, list) {
         if (err) {
@@ -75,6 +81,8 @@ function filewalker(dir, done) {
                         }
                         mapObj[plugin][language].push(`${relPath}/${fileName}`);
                         //console.log(mapObj[plugin][language]);
+
+                        files.push(`${relPath}/${fileName}`);
                     }
                     results.push(file);
 
@@ -87,12 +95,64 @@ function filewalker(dir, done) {
     });
 };
 
-filewalker(path.join(__dirname, '../../../mashup/ui-plugins'), function (err, result) { //path.join(__dirname, '../test/'
+/*filewalker(path.join(__dirname, '../../../mashup/ui-plugins'), function (err, result) { //path.join(__dirname, '../test/'
     if (err) {
         console.log(err);
         return {};
     }
-    //console.log(result)
-    return result;
-});
+    // console.log(result)
 
+    // fsx.copy(result.design.nls[0], './conf')
+    //     .then(() => console.log('success!'))
+    //     .catch(err => console.error(err))
+
+    // const nls = Object.keys(result).filter(key => {
+    //     return
+    // });
+    console.log(path.join(__dirname, `../../${result.design.nls[0]}`));
+    console.log(path.join(__dirname, `./temp`));
+    // ncp(path.join('/Users/anej/dev/DNACenter/mashup/ui-plugins/design/app/design/src/nls/i18_design.js'), path.join(__dirname, './temp'), function(err){
+    //     if(err){
+    //       console.log(err);
+    //     } else {
+    //       console.log('ok');
+    //     }
+    //   });
+
+    //fsx.copy(path.join(__dirname, `../../${result.design.nls[0]}`), path.join(__dirname, './temp/test'));
+    // fsx.ensureDirSync(path.join(__dirname, './temp/test'));    
+    // fs.copyFile(path.join(__dirname, `../../${result.design.nls[0]}`), path.join(__dirname, `./temp/test/${result.design.nls[0].split('/').pop()}`), (err) => {
+    //     if (err) throw err;
+    //     console.log('source.txt was copied to destination.txt');
+    // });
+
+    return result;
+});*/
+
+
+function copyNlsFiles() {
+    return new Promise((resolve, reject) => {
+        const map = filewalker(path.join(__dirname, '../../../mashup/ui-plugins'), function (err, result) {
+            if (err) {
+                console.log(err);
+                resolve({});
+            }
+            resolve(result);
+        });
+    });
+}
+
+copyNlsFiles().then((result) => {
+    // console.log(files);
+    files.map(file => {
+        const fileName = file.split('/').pop();
+        var myRegExp = new RegExp(`/${fileName}`);
+        const folder = file.replace(myRegExp, '');
+        fsx.ensureDirSync(path.join(__dirname, `./temp/${folder}`));
+        console.log(fileName, folder);
+        fs.copyFile(path.join(__dirname, `../../${file}`), path.join(__dirname, `./temp/${folder}/${fileName}`), (err) => {
+            if (err) throw err;
+            console.log('source.txt was copied to destination.txt');
+        });
+    });
+});

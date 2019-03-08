@@ -27,11 +27,11 @@ class DirectoryList extends Component {
             const engFile = keys.filter((key) => {
                 return key === "nls";
             });
-            console.log("engFileengFile", engFile);
+            //console.log("engFileengFile", engFile);
             const fileNames = [...obj[engFile]].map((filename) => {
                 return filename.split('/').pop();
             });
-            console.log("fileNamesfileNames", fileNames);
+            //console.log("fileNamesfileNames", fileNames);
             return fileNames.map((file, i) => {
                 return <span key={i} className="filename" onClick={this.onFileClick} data-filename={obj['nls'][i]}>{file}</span>
             });
