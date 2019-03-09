@@ -10,11 +10,14 @@ class App extends Component {
 
   state = {
     directory: {},
-    number: 0,
-    setSelectedFile: (file) => {
-      this.setState({ selectedFile: file })
+    setSelectedFilePath: (file) => {
+      this.setState({ selectedFilePath: file })
     },
-    selectedFile: ""
+    setSelectedFileName: (file) => {
+      this.setState({ selectedFileName: file })
+    },
+    selectedFilePath: "",
+    selectedFileName: ""
   }
 
   getDirectory = async () => {

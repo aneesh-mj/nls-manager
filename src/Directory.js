@@ -12,11 +12,14 @@ class DirectoryList extends Component {
 
     onFileClick = (evt) => {
         const { context } = this.props;
-        const fileName = evt.target.getAttribute("data-filename");
-        if (context.selectedFile !== fileName) {
-            context.setSelectedFile(fileName);
+        const filePath = evt.target.getAttribute("data-filepath");
+        const fileName = evt.target.getAttribute("data-file");
+        if (context.selectedFilePath !== filePath) {
+            context.setSelectedFilePath(filePath);
         }
-
+        if (context.selectedFileName !== fileName) {
+            context.setSelectedFileName(fileName);
+        }
         // debugger
         // const {file} = evt.target
     }
@@ -33,7 +36,7 @@ class DirectoryList extends Component {
             });
             //console.log("fileNamesfileNames", fileNames);
             return fileNames.map((file, i) => {
-                return <span key={i} className="filename" onClick={this.onFileClick} data-filename={obj['nls'][i]}>{file}</span>
+                return <span key={i} className="filename" onClick={this.onFileClick} data-filepath={obj['nls'][i]} data-file={key}>{file}</span>
             });
         }
         else {

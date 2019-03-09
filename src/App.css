@@ -44,7 +44,16 @@ body,
 .right {
     border: 1px solid #ccc;
     flex: 1;
+    display: flex;
 }
 .filename {
     display: block;
+}
+.keyList {
+    flex: 1;
+    overflow: auto;
+}
+.keyDetails {
+    flex: 0 0 230px;
+    border: 1px solid #ccc;
 }

@@ -4,8 +4,7 @@ const path = require('path');
 var fs = require('fs');
 const fsx = require('fs-extra');
 
-var copydir = require('copy-dir');
-var ncp = require('ncp').ncp;
+// var ncp = require('ncp').ncp;
 
 const app = express();
 
@@ -62,17 +61,31 @@ function filewalker(dir, done) {
                 } else {
                     if (path.basename(file).indexOf("i18") !== -1) {
                         const fullPAth = path.dirname(file);
-                        const relPath = path.relative(process.cwd(), fullPAth);
+                        let relPath = path.relative(process.cwd(), fullPAth);
                         const fileName = path.basename(file);
                         const uiPluginPath = path.resolve("../mashup/ui-plugins/");
-                        const plugin = fullPAth.replace(uiPluginPath + '/', '').split(path.sep)[0];
+                        //const plugin = fullPAth.replace(uiPluginPath + '/', '').split(path.sep)[0];
+                        const plugin = relPath.split(path.sep)[2];
                         const language = path.basename(path.dirname(file));
                         // console.log("fullPAth", fullPAth);
                         // console.log("fileName", fileName);
-                        // console.log("uiPluginPath", uiPluginPath);
+                        //console.log("uiPluginPath", uiPluginPath);
                         // console.log("plugin", plugin);
                         // console.log("language", language);
                         // console.log("relative", relPath );
+
+                        //  console.log("relative2", relPath.replace(new RegExp('../'), ''));
+
+                        console.log(path.basename(path.join(__dirname, `../../../`))); // PLUGIN DIRECTORY LIKE Mashup
+
+                        //relPath = relPath.replace(new RegExp('../'), ''); // TO DO: NEED GENERIC
+
+                        relPath = `./${path.basename(path.join(__dirname, '../../../'))}${relPath.replace(new RegExp('../'), '/')}`;
+
+                        // console.log(process.cwd());
+
+                        
+
                         if (!mapObj[plugin]) {
                             mapObj[plugin] = {};
                         }
@@ -132,7 +145,7 @@ function filewalker(dir, done) {
 
 function copyNlsFiles() {
     return new Promise((resolve, reject) => {
-        const map = filewalker(path.join(__dirname, '../../../mashup/ui-plugins'), function (err, result) {
+        const map = filewalker(path.join(__dirname, '../../../ui-plugins'), function (err, result) {
             if (err) {
                 console.log(err);
                 resolve({});
@@ -143,8 +156,8 @@ function copyNlsFiles() {
 }
 
 copyNlsFiles().then((result) => {
-    // console.log(files);
-    files.map(file => {
+    console.log(mapObj);
+    /*files.map(file => {
         const fileName = file.split('/').pop();
         var myRegExp = new RegExp(`/${fileName}`);
         const folder = file.replace(myRegExp, '');
@@ -154,5 +167,5 @@ copyNlsFiles().then((result) => {
             if (err) throw err;
             console.log('source.txt was copied to destination.txt');
         });
-    });
+    });*/
 });
