@@ -19,10 +19,15 @@ app.get('/api/files', function (req, res) {
     res.json(mapObj);
 });
 
+app.get('/api/langs', function (req, res) {
+    res.json(Object.keys(langs));
+});
+
 
 
 let mapObj = {};
 let files = [];
+let langs = {};
 function filewalker(dir, done) {
     // console.log("filewalkerfilewalkerfilewalker");
     let results = [];
@@ -71,7 +76,7 @@ function filewalker(dir, done) {
                         // console.log("fileName", fileName);
                         //console.log("uiPluginPath", uiPluginPath);
                         // console.log("plugin", plugin);
-                        // console.log("language", language);
+                        //console.log("language", language);
                         // console.log("relative", relPath );
 
                         //  console.log("relative2", relPath.replace(new RegExp('../'), ''));
@@ -83,8 +88,11 @@ function filewalker(dir, done) {
                         relPath = `./${path.basename(path.join(__dirname, '../../../'))}${relPath.replace(new RegExp('../'), '/')}`;
 
                         // console.log(process.cwd());
+                        if (language !== plugin && language !== "nls") {
+                            langs[language] = 1;
+                        }
 
-                        
+
 
                         if (!mapObj[plugin]) {
                             mapObj[plugin] = {};
@@ -156,16 +164,17 @@ function copyNlsFiles() {
 }
 
 copyNlsFiles().then((result) => {
-    console.log(mapObj);
-    /*files.map(file => {
+    // console.log(files);
+    files.map(file => {
         const fileName = file.split('/').pop();
         var myRegExp = new RegExp(`/${fileName}`);
         const folder = file.replace(myRegExp, '');
-        fsx.ensureDirSync(path.join(__dirname, `./temp/${folder}`));
-        console.log(fileName, folder);
-        fs.copyFile(path.join(__dirname, `../../${file}`), path.join(__dirname, `./temp/${folder}/${fileName}`), (err) => {
+        fsx.ensureDirSync(path.join(__dirname, `../${folder}`));
+        //console.log(fileName, folder);
+        console.log(path.join(__dirname, `../../../../${file}`));
+        fs.copyFile(path.join(__dirname, `../../../../${file}`), path.join(__dirname, `../${folder}/${fileName}`), (err) => {
             if (err) throw err;
             console.log('source.txt was copied to destination.txt');
         });
-    });*/
+    });
 });

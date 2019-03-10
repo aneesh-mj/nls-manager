@@ -1,9 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import { NlsConsumer } from "./AppContext";
-import I18nKey from "./I18nKey";
+import I18nKeyList from "./I18nKeyList";
 //import requirejs from  'requirejs';
 
 class FileViewer extends Component {
+
+    langs = [];
+
+    otherlangs = [];
 
     state = {
         selectedFileName: "",
@@ -17,57 +21,48 @@ class FileViewer extends Component {
 
     }
 
+    componentWillMount() {
+        console.log("componentWillMountcomponentWillMountcomponentWillMount");
+    }
+
     renderFile(context) {
-        const { selectedFileName, selectedFilePath } = context;
-        debugger
+        const { selectedFileName, selectedFilePath, langs } = context;
+        this.otherlangs = langs;
         if (selectedFileName !== this.state.selectedFileName) {
-            //console.log(`${selectedFile}`);
-            //console.log(`../../mashup/ui-plugins/inventory/app/inventory/src/nls/i18_inventory.js`);
-            //let xx = `../../mashup/ui-plugins/inventory/app/inventory/src/nls/i18_inventory.js`;
-            //const xx = `/* webpackMode: "eager" */ amdi18n-loader!../${selectedFile}`;
-            //const xx = `amdi18n-loader!../../mashup/ui-plugins/nls/i18_design.js`;
-            // import(`amdi18n-loader!../../mashup/ui-plugins/inventory/app/inventory/src/nls/i18_inventory.js`)
-            //import('amdi18n-loader!../../' + selectedFile)
-            // let xx = './nls/i18_design.js';
-            // let xx = './test.js';
-            // let xx = `./mashup/ui-plugins/design/app/design/src/nls/i18_design.js`;
-            //let xx = selectedFile.substr(1);
-            console.log(`${selectedFilePath}`);
-            //let xx = `../../ui-plugins/design/app/design/src/nls/i18_design.js`;
-            //let xx = `../../${selectedFile}`;
-            // import(`${selectedFile}`)
-            // let xx = 'amdi18n-loader!./mashup/ui-plugins/design/app/design/src/nls/i18_design.js';
-            //import(`${xx}`)
-            // .then((module) => {
-            //     // Do something with the module.
-            //     console.log("module", module);
+            console.log(`${selectedFilePath}`, langs);
+            const selectedFilePath1 = `./mashup/ui-plugins/inventory/app/inventory/src/nls/i18_inventory.js`;
 
-            //     this.setState({
-            //         selectedFile,
-            //         module
-            //     });
+            const selectedFilePaths = langs.map(lang => {
+                const regex = new RegExp('/nls/');
+                const newPath = selectedFilePath.replace(regex, `/nls/${lang}/`);
+                console.log("newPathnewPath", newPath);
+                //return selectedFilePath.replace(regex, `/${lang}/`);
+                return import(`${newPath}`);
+            });
 
+            console.log(selectedFilePaths);
 
-            // });
+            selectedFilePaths.unshift(import(`${selectedFilePath}`));
 
-            Promise.all([
-                import(`${selectedFilePath}`)
-            ])
-                .then(([module, module2, module3]) => {
-                    console.log("module", module);
-
+            // Promise.all([
+            //     import(`${selectedFilePath}`)
+            // ])
+            Promise.all(selectedFilePaths)
+                .then(([module, module2, module3, module4]) => {
+                    console.log("module1111", module, module2, module3, module4);
+                    /* window.module = module;
+                     if (!this.langs.length) {
+                         this.langs = Object.keys(module);
+                         this.otherlangs = this.langs.filter(lang => {
+                             return lang !== "root" && lang !== "default";
+                         });
+                     }*/
                     this.setState({
                         selectedFileName,
                         module
                     });
                 });
         }
-
-
-        // return <div className="fileViewer">
-        //     {context.selectedFile}
-
-        // </div>
     }
 
     render() {
@@ -82,7 +77,7 @@ class FileViewer extends Component {
                     }
                 </NlsConsumer>
                 {module ?
-                    <I18nKey keyList={module.default.root} /> : null}
+                    <I18nKeyList module={module} langs={this.otherlangs} /> : null}
 
             </React.Fragment>
 

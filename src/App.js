@@ -17,11 +17,12 @@ class App extends Component {
       this.setState({ selectedFileName: file })
     },
     selectedFilePath: "",
-    selectedFileName: ""
+    selectedFileName: "",
+    langs: []
   }
 
-  getDirectory = async () => {
-    const response = await fetch('/api/files');
+  getContextFromAPI = async (url) => {
+    const response = await fetch(url);
     const body = await response.json();
 
     if (response.status !== 200) {
@@ -30,13 +31,29 @@ class App extends Component {
     return body;
   };
 
-  componentDidMount() {
-    this.getDirectory()
+  setContextFromAPI = (url, prop) => {
+    this.getContextFromAPI(url)
       .then(res => {
-        // debugger
-        this.setState({ directory: res })
+        this.setState({ [prop]: res })
       })
       .catch(err => console.log(err));
+
+  }
+
+
+  // getDirectory = async () => {
+  //   const response = await fetch('/api/files');
+  //   const body = await response.json();
+
+  //   if (response.status !== 200) {
+  //     throw Error(body.message)
+  //   }
+  //   return body;
+  // };
+
+  componentDidMount() {
+    this.setContextFromAPI('/api/files', 'directory' );
+    this.setContextFromAPI('/api/langs', 'langs' );
   }
 
   render() {
