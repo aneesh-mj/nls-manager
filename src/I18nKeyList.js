@@ -28,8 +28,8 @@ class I18nKey extends Component {
 class I18nKeyList extends Component {
 
     render() {
-        const { module, langs } = this.props;
-        const keyList = module.default.root;
+        const { modules, langs } = this.props;
+        const keyList = modules ? modules.en : {};
         return (
             <React.Fragment>
                 <div className='keyList'>

@@ -11,7 +11,7 @@ class FileViewer extends Component {
 
     state = {
         selectedFileName: "",
-        module: null
+        modules: null
     }
 
     static getDerivedStateFromProps(newProps, state) {
@@ -48,8 +48,8 @@ class FileViewer extends Component {
             //     import(`${selectedFilePath}`)
             // ])
             Promise.all(selectedFilePaths)
-                .then(([module, module2, module3, module4]) => {
-                    console.log("module1111", module, module2, module3, module4);
+                .then((modules) => {
+                    console.log("module1111", modules);
                     /* window.module = module;
                      if (!this.langs.length) {
                          this.langs = Object.keys(module);
@@ -57,16 +57,24 @@ class FileViewer extends Component {
                              return lang !== "root" && lang !== "default";
                          });
                      }*/
+                    const _modules = {};
+                    let _langs = ["en", ...langs];
+                    modules.map((module, i) => {
+                        _modules[_langs[i]] = module.default.root || module;
+                    });
+
+                    console.log("_modules", _modules);
+
                     this.setState({
                         selectedFileName,
-                        module
+                        modules: _modules
                     });
                 });
         }
     }
 
     render() {
-        const { module } = this.state;
+        const { modules } = this.state;
         return (
             <React.Fragment>
                 <NlsConsumer>
@@ -77,7 +85,7 @@ class FileViewer extends Component {
                     }
                 </NlsConsumer>
                 {module ?
-                    <I18nKeyList module={module} langs={this.otherlangs} /> : null}
+                    <I18nKeyList modules={modules} langs={this.otherlangs} /> : null}
 
             </React.Fragment>
 
