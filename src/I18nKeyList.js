@@ -4,14 +4,30 @@ import KeysInfo from "./KeysInfo";
 
 class I18nKey extends Component {
 
+    state = {
+        key: null,
+        item: {}
+    }
+
     componentWillReceiveProps(nProps) {
         // console.log(nProps);
     }
 
     onClick = () => {
-        const { langs } = this.props;
+        const { item, modules } = this.props;
 
-        console.log(langs);
+        const _item = {};
+
+        Object.keys(modules).map(module => {
+            _item[module] = modules[module][item];
+        });
+
+        this.setState({
+            key: item,
+            item: _item
+        });
+
+        console.log(this.state);
     }
 
     render() {
@@ -34,7 +50,7 @@ class I18nKeyList extends Component {
             <React.Fragment>
                 <div className='keyList'>
                     {Object.keys(keyList).map(keyy => {
-                        return <I18nKey item={keyList[keyy]} langs={langs} />
+                        return <I18nKey item={keyy} modules={modules} />
                     })}
                 </div>
                 <div className="keyDetails">
