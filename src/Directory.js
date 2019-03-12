@@ -3,6 +3,8 @@ import { NlsConsumer } from "./AppContext";
 
 class DirectoryList extends Component {
 
+    _selected = document.createElement('span');
+
     _context = {};
 
     componentWillReceiveProps(n, old) {
@@ -20,8 +22,13 @@ class DirectoryList extends Component {
         if (context.selectedFileName !== fileName) {
             context.setSelectedFileName(fileName);
         }
-        // debugger
-        // const {file} = evt.target
+        if (!evt.target.isEqualNode(this._selected)) {
+            if (this._selected) {
+                this._selected.classList.remove('selected');
+            }
+            evt.target.classList.add('selected');
+            this._selected = evt.target;
+        }
     }
 
     renderFileList(obj, key) {

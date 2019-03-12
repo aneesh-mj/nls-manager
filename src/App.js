@@ -26,7 +26,11 @@ class App extends Component {
     },
     setKeyInfo: (keyInfo) => {
       this.setState({ keyInfo })
-    }
+    },
+    keyInfoStatus: false,
+    setKeyInfoStatus: (keyInfoStatus) => {
+      this.setState({ keyInfoStatus })
+    },
   }
 
   getContextFromAPI = async (url) => {

@@ -1,9 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import KeysInfo from "./KeysInfo";
+import NewKey from "./NewKey";
 import { NlsConsumer } from "./AppContext";
 
 
 class I18nKey extends Component {
+
+
 
     state = {
         key: null,
@@ -14,8 +17,8 @@ class I18nKey extends Component {
         // console.log(nProps);
     }
 
-    onClick = (context) => {
-        const { item, modules } = this.props;
+    onClick = (evt, context) => {
+        const { item, modules, onKeyClick } = this.props;
 
         const _item = {};
 
@@ -34,6 +37,10 @@ class I18nKey extends Component {
             key: item,
             item: _item
         });
+
+        if (onKeyClick) {
+            onKeyClick(evt, context);
+        }
     }
 
     render() {
@@ -44,7 +51,7 @@ class I18nKey extends Component {
                 {
                     context => {
                         return <div className='keyItem' onClick={(evt) => {
-                            this.onClick(context);
+                            this.onClick(evt, context);
                         }}>{val}</div>
                     }
                 }
@@ -56,25 +63,48 @@ class I18nKey extends Component {
 
 class I18nKeyList extends Component {
 
-    addNewKey = () => {
+    _selected = document.createElement('span');
 
+    state = {
+        add: false
+    }
+
+    addNewKey = () => {
+        this.setState({
+            add: true
+        });
+    }
+
+    onKeyClick = (evt) => {
+        this.setState({
+            add: false
+        });
+        if (!evt.target.isEqualNode(this._selected)) {
+            if (this._selected) {
+                this._selected.classList.remove('selected');
+            }
+            evt.target.classList.add('selected');
+            this._selected = evt.target;
+        }
     }
 
     render() {
         const { modules, langs } = this.props;
         const keyList = modules ? modules.en : {};
+        const type = this.state.add ? "add" : "edit";
         return (
             <React.Fragment>
-                <div className='actionHeader'>
-                    <span onClick={this.addNewKey}>Add new key</span>
-                </div>
                 <div className='keyList'>
+                    <div className='actionHeader'>
+                        <span onClick={this.addNewKey}>Add new key</span>
+                    </div>
                     {Object.keys(keyList).map((keyy, i) => {
-                        return <I18nKey key={i} item={keyy} modules={modules} />
+                        return <I18nKey key={i} item={keyy} modules={modules} onKeyClick={this.onKeyClick} />
                     })}
                 </div>
                 <div className="keyDetails">
-                    <KeysInfo />
+                    {this.state.add ? <NewKey /> : <KeysInfo />}
+
                 </div>
             </React.Fragment>
         );

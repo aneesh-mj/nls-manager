@@ -2,7 +2,7 @@ html,
 body,
 #root,
 .bodyContainer {
-   font-family: Arial,Helvetica,Helvetica Neue,HelveticaNeue,Lucida Grande,sans-serif;
+    font-family: Arial, Helvetica, Helvetica Neue, HelveticaNeue, Lucida Grande, sans-serif;
     height: 100%;
     padding: 0;
     margin: 0;
@@ -41,50 +41,68 @@ body,
     flex: 0 0 230px;
     overflow: auto;
 }
+
 .directoryList {
     padding: 10px;
 }
+
 .directoryList h4 {
     margin: 5px 0;
 }
+
 .directoryList .filename {
     padding: 5px 5px 5px 10px;
 }
+
 .right {
     border: 1px solid #ccc;
     flex: 1;
     display: flex;
 }
+
 .filename {
     display: block;
 }
+
 .keyList {
     flex: 1;
     overflow: auto;
     padding: 10px;
 }
+
 .keyItem {
-    padding-bottom: 10px;
+    padding: 5px;
 }
+
+.filename.selected,
+.keyItem.selected {
+    background-color: lightblue;
+}
+
 .keyDetails {
     flex: 0 0 400px;
     border: 1px solid #ccc;
     padding: 10px;
 }
+
 .keyDetails .lang {
     display: block;
 }
+
 .keyDetails textarea {
     display: block;
     width: 90%;
 }
+
 .key-lang {
     margin-top: 20px;
 }
+
 .langSect {
     padding: 10px;
     border-bottom: 1px solid #ccc;
 }
+
 .langSect .lang {
     padding-bottom: 10px;
 }
