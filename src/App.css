@@ -16,10 +16,13 @@ body,
 }
 
 .header {
-    height: 100px;
-    border: 1px solid #ccc;
+    box-shadow: 0 1px 4px 0 #0003;
 }
-
+.ciscoLogo {
+    color: #049fd9;
+    padding: 20px;
+    font-size: 24px;
+}
 .middle {
     flex: 1;
     display: flex;
@@ -27,8 +30,8 @@ body,
 }
 
 .footer {
-    height: 100px;
-    border: 1px solid #ccc;
+    height: 50px;
+    border-top: 1px solid #ccc;
 }
 
 .left,
@@ -37,7 +40,7 @@ body,
 }
 
 .left {
-    border: 1px solid #ccc;
+    border-right: 1px solid #ccc;
     flex: 0 0 230px;
     overflow: auto;
 }
@@ -55,7 +58,6 @@ body,
 }
 
 .right {
-    border: 1px solid #ccc;
     flex: 1;
     display: flex;
 }
@@ -81,7 +83,7 @@ body,
 
 .keyDetails {
     flex: 0 0 400px;
-    border: 1px solid #ccc;
+    border-left: 1px solid #ccc;
     padding: 10px;
 }
 
@@ -105,4 +107,12 @@ body,
 
 .langSect .lang {
     padding-bottom: 10px;
+}
+
+.actionHeader {
+    border-bottom: 1px solid #ccc;
+    padding: 0 10px 10px 5px;
+}
+.actionHeader .addNewKey {
+    color: steelblue;
 }

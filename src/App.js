@@ -72,7 +72,11 @@ class App extends Component {
     return (
       <NlsProvider value={this.state}>
         <div className="bodyContainer">
-          <div className="header"></div>
+          <div className="header">
+            <div className='ciscoLogo'>
+              Cisco DNA Center
+            </div>
+          </div>
           <div className="middle">
             <div className="left">
               <Languages />

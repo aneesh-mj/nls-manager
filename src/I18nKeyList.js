@@ -96,7 +96,7 @@ class I18nKeyList extends Component {
             <React.Fragment>
                 <div className='keyList'>
                     <div className='actionHeader'>
-                        <span onClick={this.addNewKey}>Add new key</span>
+                        <span onClick={this.addNewKey} className='addNewKey'>Add new key</span>
                     </div>
                     {Object.keys(keyList).map((keyy, i) => {
                         return <I18nKey key={i} item={keyy} modules={modules} onKeyClick={this.onKeyClick} />
