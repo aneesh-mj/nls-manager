@@ -25,7 +25,7 @@ class Info extends Component {
                 <div className='key'><span>key: </span>{key}</div>
                 {
                     Object.keys(item).map(lang => {
-                        return <InfoItem lang={lang} value={item[lang]} nlsKey={key} />
+                        return <InfoItem key={lang} lang={lang} value={item[lang]} nlsKey={key} />
                     })
                 }
             </React.Fragment>

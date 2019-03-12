@@ -13,10 +13,6 @@ class I18nKey extends Component {
         item: {}
     }
 
-    componentWillReceiveProps(nProps) {
-        // console.log(nProps);
-    }
-
     onClick = (evt, context) => {
         const { item, modules, onKeyClick } = this.props;
 
@@ -25,13 +21,6 @@ class I18nKey extends Component {
         Object.keys(modules).map(module => {
             _item[module] = modules[module][item];
         });
-
-        // this.setState({
-        //     key: item,
-        //     item: _item
-        // });
-
-        console.log(this.state);
 
         context.setKeyInfo({
             key: item,
@@ -66,7 +55,9 @@ class I18nKeyList extends Component {
     _selected = document.createElement('span');
 
     state = {
-        add: false
+        add: false,
+        searchText: "",
+        list: []
     }
 
     addNewKey = () => {
@@ -88,6 +79,20 @@ class I18nKeyList extends Component {
         }
     }
 
+    onSearchChange = (evt) => {
+        this.setState({
+            searchText: evt.target.value
+        });
+    }
+
+    componentWillMount() {
+       // console.log("componentWillMount!!!");
+    }
+
+    componentWillReceiveProps(n, o) {
+        //this.props.selectedFileName
+    }
+
     render() {
         const { modules, langs } = this.props;
         const keyList = modules ? modules.en : {};
@@ -97,9 +102,14 @@ class I18nKeyList extends Component {
                 <div className='keyList'>
                     <div className='actionHeader'>
                         <span onClick={this.addNewKey} className='addNewKey'>Add new key</span>
+                        <span className='searchContainer'>
+                            <input type="text" value={this.state.searchText} onChange={this.onSearchChange} />
+                        </span>
                     </div>
                     {Object.keys(keyList).map((keyy, i) => {
-                        return <I18nKey key={i} item={keyy} modules={modules} onKeyClick={this.onKeyClick} />
+                        // return modules.en[keyy].indexOf(this.state.searchText) !== -1 ? <I18nKey key={i} item={keyy} modules={modules} onKeyClick={this.onKeyClick} /> : '';
+                        // console.log( modules.en[keyy]);
+                        return <I18nKey key={i} item={keyy} modules={modules} onKeyClick={this.onKeyClick} />;
                     })}
                 </div>
                 <div className="keyDetails">

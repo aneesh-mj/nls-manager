@@ -8,7 +8,6 @@ class DirectoryList extends Component {
     _context = {};
 
     componentWillReceiveProps(n, old) {
-        console.log(n, this._context);
         this._context = n;
     }
 
@@ -37,11 +36,9 @@ class DirectoryList extends Component {
             const engFile = keys.filter((key) => {
                 return key === "nls";
             });
-            //console.log("engFileengFile", engFile);
             const fileNames = [...obj[engFile]].map((filename) => {
                 return filename.split('/').pop();
             });
-            //console.log("fileNamesfileNames", fileNames);
             return fileNames.map((file, i) => {
                 return <span key={i} className="filename" onClick={this.onFileClick} data-filepath={obj['nls'][i]} data-file={key}>{file}</span>
             });

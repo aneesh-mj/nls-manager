@@ -112,7 +112,12 @@ body,
 .actionHeader {
     border-bottom: 1px solid #ccc;
     padding: 0 10px 10px 5px;
+    display: flex;
 }
 .actionHeader .addNewKey {
     color: steelblue;
+    flex: 1;
+}
+.actionHeader .searchContainer input {
+    width: 200px;
 }
