@@ -17,7 +17,6 @@ class InfoItem extends Component {
 class Info extends Component {
 
     render() {
-        debugger
         const { context } = this.props;
         const { keyInfo } = context;
         const { key, item } = keyInfo;

@@ -5,6 +5,7 @@ import './App.css';
 import { NlsProvider } from "./AppContext";
 import Directory from "./Directory";
 import FileViewer from "./FileViewer";
+import Languages from "./Languages";
 
 class App extends Component {
 
@@ -70,6 +71,7 @@ class App extends Component {
           <div className="header"></div>
           <div className="middle">
             <div className="left">
+              <Languages />
               <Directory />
             </div>
             <div className="right">

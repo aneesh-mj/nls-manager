@@ -81,3 +81,10 @@ body,
 .key-lang {
     margin-top: 20px;
 }
+.langSect {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+.langSect .lang {
+    padding-bottom: 10px;
+}
