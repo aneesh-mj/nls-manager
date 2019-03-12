@@ -3,6 +3,7 @@ const os = require('os');
 const path = require('path');
 var fs = require('fs');
 const fsx = require('fs-extra');
+const bodyParser = require('body-parser');
 
 // var ncp = require('ncp').ncp;
 
@@ -11,6 +12,11 @@ const app = express();
 app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT}, ${process.argv.slice(2)}!`));
 
 app.use(express.static('dist'));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+app.use(bodyParser.json());
+
 app.get('/api/getUsername', (req, res) => res.send({
     username: os.userInfo().username
 }));
@@ -23,7 +29,16 @@ app.get('/api/langs', function (req, res) {
     res.json(Object.keys(langs));
 });
 
+app.post('/api/createNewKey', (req, res) => {
+    const key = req.body.nlskey
+    const val = req.body.val;
+    console.log(req.body);
+    res.json(formatJsonResponse({ data: { key, val } }));
+})
 
+function formatJsonResponse(obj) {
+    return JSON.parse(JSON.stringify(obj))
+}
 
 let mapObj = {};
 let files = [];
@@ -81,7 +96,7 @@ function filewalker(dir, done) {
 
                         //  console.log("relative2", relPath.replace(new RegExp('../'), ''));
 
-                        console.log(path.basename(path.join(__dirname, `../../../`))); // PLUGIN DIRECTORY LIKE Mashup
+                        // console.log(path.basename(path.join(__dirname, `../../../`))); // PLUGIN DIRECTORY LIKE Mashup
 
                         //relPath = relPath.replace(new RegExp('../'), ''); // TO DO: NEED GENERIC
 
@@ -171,10 +186,10 @@ copyNlsFiles().then((result) => {
         const folder = file.replace(myRegExp, '');
         fsx.ensureDirSync(path.join(__dirname, `../${folder}`));
         //console.log(fileName, folder);
-        console.log(path.join(__dirname, `../../../../${file}`));
+        // console.log(path.join(__dirname, `../../../../${file}`));
         fs.copyFile(path.join(__dirname, `../../../../${file}`), path.join(__dirname, `../${folder}/${fileName}`), (err) => {
             if (err) throw err;
-            console.log('source.txt was copied to destination.txt');
+            // console.log('source.txt was copied to destination.txt');
         });
     });
 });

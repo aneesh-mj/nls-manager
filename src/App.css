@@ -121,3 +121,7 @@ body,
 .actionHeader .searchContainer input {
     width: 200px;
 }
+.create-new-btn {
+    color: steelblue;
+    cursor: pointer;
+}
