@@ -49,8 +49,8 @@ class DirectoryList extends Component {
         const keys = Object.keys(context.directory);
         if (keys && keys.length) {
             return keys.map((key) => {
-                return <div>
-                    <h4 key={key}>{key}</h4>
+                return <div key={key}>
+                    <h4>{key}</h4>
                     {this.renderFileList(context.directory[key], key)}
                 </div>
             });
@@ -62,7 +62,7 @@ class DirectoryList extends Component {
 
     render() {
         return (
-            <div>
+            <div className='directoryList'>
                 {this.renderHeader()}
             </div>
         );

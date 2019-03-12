@@ -18,7 +18,14 @@ class App extends Component {
     },
     selectedFilePath: "",
     selectedFileName: "",
-    langs: []
+    langs: [],
+    keyInfo: {
+      key: "",
+      item: {}
+    },
+    setKeyInfo: (keyInfo) => {
+      this.setState({ keyInfo })
+    }
   }
 
   getContextFromAPI = async (url) => {
@@ -52,8 +59,8 @@ class App extends Component {
   // };
 
   componentDidMount() {
-    this.setContextFromAPI('/api/files', 'directory' );
-    this.setContextFromAPI('/api/langs', 'langs' );
+    this.setContextFromAPI('/api/files', 'directory');
+    this.setContextFromAPI('/api/langs', 'langs');
   }
 
   render() {

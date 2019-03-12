@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import KeysInfo from "./KeysInfo";
+import { NlsConsumer } from "./AppContext";
 
 
 class I18nKey extends Component {
@@ -13,7 +14,7 @@ class I18nKey extends Component {
         // console.log(nProps);
     }
 
-    onClick = () => {
+    onClick = (context) => {
         const { item, modules } = this.props;
 
         const _item = {};
@@ -22,20 +23,32 @@ class I18nKey extends Component {
             _item[module] = modules[module][item];
         });
 
-        this.setState({
+        // this.setState({
+        //     key: item,
+        //     item: _item
+        // });
+
+        console.log(this.state);
+
+        context.setKeyInfo({
             key: item,
             item: _item
         });
-
-        console.log(this.state);
     }
 
     render() {
-        const { item, langs } = this.props;
+        const { item, modules } = this.props;
+        const val = modules.en[item];
         return (
-            <div className='keyItem' onClick={this.onClick}>
-                {item}
-            </div>
+            <NlsConsumer>
+                {
+                    context => {
+                        return <div className='keyItem' onClick={(evt) => {
+                            this.onClick(context);
+                        }}>{val}</div>
+                    }
+                }
+            </NlsConsumer>
         );
     }
 

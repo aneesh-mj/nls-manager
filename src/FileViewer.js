@@ -14,12 +14,12 @@ class FileViewer extends Component {
         modules: null
     }
 
-    static getDerivedStateFromProps(newProps, state) {
-        // console.log("getDerivedStateFromProps", newProps, state);
-        //console.log("requirejs", requirejs);
+    // static getDerivedStateFromProps(newProps, state) {
+    //     // console.log("getDerivedStateFromProps", newProps, state);
+    //     //console.log("requirejs", requirejs);
 
 
-    }
+    // }
 
     componentWillMount() {
         console.log("componentWillMountcomponentWillMountcomponentWillMount");
