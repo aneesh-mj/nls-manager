@@ -94,7 +94,7 @@ class I18nKeyList extends Component {
     }
 
     render() {
-        const { modules, langs } = this.props;
+        const { modules, langs, selectedFilePath } = this.props;
         const keyList = modules ? modules.en : {};
         const type = this.state.add ? "add" : "edit";
         return (
@@ -113,7 +113,7 @@ class I18nKeyList extends Component {
                     })}
                 </div>
                 <div className="keyDetails">
-                    {this.state.add ? <NewKey /> : <KeysInfo />}
+                    {this.state.add ? <NewKey selectedFilePath={selectedFilePath} /> : <KeysInfo />}
 
                 </div>
             </React.Fragment>

@@ -18,10 +18,12 @@ class NewKey extends Component {
     onClick = () => {
         // const key = `nls_${new Date().valueOf()}`;
         // const value = this.state.val;
+        const { selectedFilePath } = this.props;
         $.ajax({
-            url:'/api/createNewKey',
+            url: '/api/createNewKey',
             method: "POST",
             data: JSON.stringify({
+                selectedFilePath,
                 nlskey: `nls_${new Date().valueOf()}`,
                 val: this.state.val
             }),
@@ -31,6 +33,10 @@ class NewKey extends Component {
                 console.log("createNewKey", data);
             });
 
+    }
+
+    componentWillReceiveProps(newProps) {
+        console.log(newProps);
     }
 
     render() {

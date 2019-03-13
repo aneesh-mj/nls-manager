@@ -4,6 +4,16 @@ const path = require('path');
 var fs = require('fs');
 const fsx = require('fs-extra');
 const bodyParser = require('body-parser');
+const requirejs = require("amd-loader");
+
+/*requirejs.config({
+    //Pass the top-level main.js/index.js require
+    //function to requirejs so that node modules
+    //are loaded relative to the top-level JS file.
+    nodeRequire: require,
+    baseUrl: __dirname
+});*/
+
 
 // var ncp = require('ncp').ncp;
 
@@ -32,12 +42,43 @@ app.get('/api/langs', function (req, res) {
 app.post('/api/createNewKey', (req, res) => {
     const key = req.body.nlskey
     const val = req.body.val;
-    console.log(req.body);
-    res.json(formatJsonResponse({ data: { key, val } }));
+    const selectedFilePath = req.body.selectedFilePath;
+    // console.log(req.body);
+    // res.json(formatJsonResponse({ data: { key, val, selectedFilePath } }));
+    console.log(path.join(__dirname, '../App.js'));
+    console.log('/Users/anej/dev/DNACenter/mashup/nls-manager/src/App.js');
+
+
+    fs.readFile(path.join(__dirname, '../App.js'), function (err, data) {
+        // var json = JSON.parse(data);
+
+        //console.log(data);
+        // json.push('search result: ' + currentSearchResult)
+
+        // fs.writeFile("results.json", JSON.stringify(json))
+    })
 })
+
+const selectedFilePath = "./mashup/ui-plugins/design/app/design/src/nls/i18_design.js";
+
+require(['../mashup/ui-plugins/design/app/design/src/nls/i18_design'],
+    function (foo) {
+        //foo and bar are loaded according to requirejs
+        //config, but if not found, then node's require
+        //is used to load the module.
+        console.log("foofoofoo", foo);
+    });
+
+// fs.exists(path.join(__dirname, '../App.js'), function (exists) {
+//     console.log("exists", exists);
+// });
 
 function formatJsonResponse(obj) {
     return JSON.parse(JSON.stringify(obj))
+}
+
+function addKey(filepath, key, value) {
+
 }
 
 let mapObj = {};
