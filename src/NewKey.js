@@ -18,12 +18,13 @@ class NewKey extends Component {
     onClick = () => {
         // const key = `nls_${new Date().valueOf()}`;
         // const value = this.state.val;
-        const { selectedFilePath } = this.props;
+        const { selectedFilePath, modules } = this.props;
         $.ajax({
             url: '/api/createNewKey',
             method: "POST",
             data: JSON.stringify({
                 selectedFilePath,
+                modules,
                 nlskey: `nls_${new Date().valueOf()}`,
                 val: this.state.val
             }),

@@ -86,7 +86,7 @@ class I18nKeyList extends Component {
     }
 
     componentWillMount() {
-       // console.log("componentWillMount!!!");
+        // console.log("componentWillMount!!!");
     }
 
     componentWillReceiveProps(n, o) {
@@ -113,7 +113,7 @@ class I18nKeyList extends Component {
                     })}
                 </div>
                 <div className="keyDetails">
-                    {this.state.add ? <NewKey selectedFilePath={selectedFilePath} /> : <KeysInfo />}
+                    {this.state.add ? <NewKey selectedFilePath={selectedFilePath} modules={modules} /> : <KeysInfo />}
 
                 </div>
             </React.Fragment>
