@@ -65,10 +65,15 @@ class DirectoryList extends Component {
     }
 
     render() {
+        const basePlugin = this.props.context.pluginName;
+        console.log("basePlugin", basePlugin);
         return (
-            <div className='directoryList'>
-                {this.renderHeader()}
-            </div>
+            <React.Fragment>
+                <div className="pluginName">{basePlugin}</div>
+                <div className='directoryList'>
+                    {this.renderHeader()}
+                </div>
+            </React.Fragment>
         );
     }
 };

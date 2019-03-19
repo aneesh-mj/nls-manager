@@ -18,10 +18,12 @@ class Lang extends Component {
         const { langs } = context;
         return (
             <div className='langSect'>
-                {langs.map(lang => {
-                    return <div key={lang} className="lang">{lang}</div>
-                })}
-
+                <div className='langHeader'>Languages</div>
+                <div className='langs'>
+                    {langs.map(lang => {
+                        return <div key={lang} className="lang">{lang}</div>
+                    })}
+                </div>
                 <div className='addNewLang'>
                     <div className='addLink' onClick={this.addNewLang}>Add new language</div>
                     {this.state.add ? (

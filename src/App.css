@@ -43,6 +43,7 @@ body,
     border-right: 1px solid #ccc;
     flex: 0 0 230px;
     overflow: auto;
+    background-color: #f4f4f4;
 }
 
 .directoryList {
@@ -101,14 +102,20 @@ body,
 }
 
 .langSect {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
 }
 
 .langSect .lang {
     padding-bottom: 10px;
 }
-
+.langSect .langs {
+    padding: 10px;
+}
+.langHeader {
+    font-weight: bold;
+    font-size: 17px;
+    border-bottom: 1px solid #ccc;
+}
 .actionHeader {
     border-bottom: 1px solid #ccc;
     padding: 0 10px 10px 5px;
@@ -124,4 +131,10 @@ body,
 .create-new-btn {
     color: steelblue;
     cursor: pointer;
+}
+.pluginName {
+    padding: 10px;
+    font-size: 24px;
+    color: #fff;
+    background-color:#0096d6
 }

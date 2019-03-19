@@ -10,6 +10,7 @@ import Languages from "./Languages";
 class App extends Component {
 
   state = {
+    pluginName: "",
     directory: {},
     setSelectedFilePath: (file) => {
       this.setState({ selectedFilePath: file })
@@ -43,10 +44,10 @@ class App extends Component {
     return body;
   };
 
-  setContextFromAPI = (url, prop) => {
+  setContextFromAPI = (url, prop, key) => {
     this.getContextFromAPI(url)
       .then(res => {
-        this.setState({ [prop]: res })
+        this.setState({ [prop]: key ? res[key] : res })
       })
       .catch(err => console.log(err));
 
@@ -66,6 +67,7 @@ class App extends Component {
   componentDidMount() {
     this.setContextFromAPI('/api/files', 'directory');
     this.setContextFromAPI('/api/langs', 'langs');
+    this.setContextFromAPI('/api/pluginRepo', 'pluginName', 'repo');
   }
 
   render() {
@@ -79,8 +81,8 @@ class App extends Component {
           </div>
           <div className="middle">
             <div className="left">
-              <Languages />
               <Directory />
+              <Languages />
             </div>
             <div className="right">
               <FileViewer />

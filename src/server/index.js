@@ -1,11 +1,12 @@
 const express = require('express');
 const os = require('os');
 const path = require('path');
-var fs = require('fs');
+const fs = require('fs');
 const fsx = require('fs-extra');
 const bodyParser = require('body-parser');
 const translate = require('@vitalets/google-translate-api');
-var beautify = require('js-beautify').js
+const beautify = require('js-beautify').js
+const utf8 = require('utf8');
 
 const app = express();
 
@@ -28,6 +29,13 @@ app.get('/api/files', function (req, res) {
 
 app.get('/api/langs', function (req, res) {
     res.json(Object.keys(langs));
+});
+
+app.get('/api/pluginRepo', function (req, res) {
+    const basePluginPath = path.join(__dirname, '../../../').substr(1).slice(0, -1);
+    res.json({
+        repo: basePluginPath.split('/').pop()
+    });
 });
 
 app.post('/api/createNewKey', (req, res) => {
@@ -97,14 +105,14 @@ const writeToFile = (filepath, data, lang, langs) => {
     let _data = { ...data };
     console.log("check lang", lang);
     if (lang === "en") {
-        _data_start = `define({root:`;
+        _data_start = `define({'root':`;
         const _data_end_arr = [];
         langs.map(l => {
             if (l !== 'en') {
-                _data_end_arr.push(`${l}: true`);
+                _data_end_arr.push(`'${l}': true`);
             }
         });
-        _data_end = `,${_data_end_arr.join(',')}`;
+        _data_end = `,${_data_end_arr.join(',')}})`;
         console.log("_data_end", _data_end);
     }
     else {
@@ -165,6 +173,10 @@ const translateTexts = (txt, langs) => {
             lang = 'zh-CN';
         }
         arr.push(translate(txt, { from: 'en', to: lang }));
+        /*
+        let translatedTxt = translate(txt, { from: 'en', to: lang });
+        console.log("translatedTxt", utf8.decode(translatedTxt));
+        arr.push(utf8.encode(translatedTxt));*/
     });
     // 
     return Promise.all(arr);
